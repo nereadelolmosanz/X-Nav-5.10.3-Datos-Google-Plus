@@ -31,7 +31,7 @@
       // The provided key works for this sample only when run from
       // https://google-api-javascript-client.googlecode.com/hg/samples/authSample.html
       // To use in your own application, replace this API key with your own.
-      var apiKey = '';
+      var apiKey = 'AIzaSyCBlcH0VGi7NgVdPo3a1CHHPC5pTS3iP4g';
 
       // Use a button to handle authentication the first time.
       function handleClientLoad() {
@@ -43,8 +43,8 @@
       function makeApiCall() {
         gapi.client.load('plus', 'v1', function() {
           var request = gapi.client.plus.people.get({
-            'userId': ''
-            // For instance: 
+            'userId': '+ChristinaCollada'
+            // For instance:
             // 'userId': '+GregorioRobles'
           });
           request.execute(function(resp) {
@@ -56,6 +56,33 @@
 
             document.getElementById('content').appendChild(heading);
           });
+          var activities = gapi.client.plus.activities.list({
+            'userId': '+ChristinaCollada',
+            'collection': 'public',
+            'items': 'location(displayName,position)'
+            // For instance:
+            // 'userId': '+GregorioRobles'
+          });
+          activities.execute(function(resp) {
+            for (var i = 0; i < resp.items.length; i++){
+              if(resp.items[i].location != null){
+                var heading = document.createElement('h4');
+                var activity = resp.items[i].location.displayName;
+                heading.appendChild(document.createTextNode(activity));
+
+                var info = document.createElement('p');
+                var latitude = resp.items[i].location.position.latitude;
+                var longitude = resp.items[i].location.position.longitude;
+                info.appendChild(document.createTextNode("Latitude: " + latitude + " - "));
+                info.appendChild(document.createTextNode("Longitude: " + longitude));
+
+                document.getElementById('content').appendChild(heading);
+                document.getElementById('content').appendChild(info);
+              }
+            }
+          });
+
+
         });
       }
     </script>
