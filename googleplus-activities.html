@@ -31,7 +31,7 @@
       // The provided key works for this sample only when run from
       // https://google-api-javascript-client.googlecode.com/hg/samples/authSample.html
       // To use in your own application, replace this API key with your own.
-      var apiKey = 'AIzaSyCBlcH0VGi7NgVdPo3a1CHHPC5pTS3iP4g';
+      var apiKey = 'AIzaSyBAGoM7AQnX7-VkLhGMelCwX_GXam5hArY';
 
       // Use a button to handle authentication the first time.
       function handleClientLoad() {
@@ -43,7 +43,7 @@
       function makeApiCall() {
         gapi.client.load('plus', 'v1', function() {
           var request = gapi.client.plus.people.get({
-            'userId': '+ChristinaCollada'
+            'userId': '103846222472267112072'
             // For instance:
             // 'userId': '+GregorioRobles'
           });
@@ -53,18 +53,16 @@
             image.src = resp.image.url;
             heading.appendChild(image);
             heading.appendChild(document.createTextNode(resp.displayName));
-
             document.getElementById('content').appendChild(heading);
           });
+
           var activities = gapi.client.plus.activities.list({
-            'userId': '+ChristinaCollada',
+            'userId': '103846222472267112072',
             'collection': 'public',
-            'items': 'location(displayName,position)'
-            // For instance:
-            // 'userId': '+GregorioRobles'
+            'items' : 'location(displayName, position)'
           });
           activities.execute(function(resp) {
-            for (var i = 0; i < resp.items.length; i++){
+            for (var i=0; i<resp.items.length; i++){
               if(resp.items[i].location != null){
                 var heading = document.createElement('h4');
                 var activity = resp.items[i].location.displayName;
@@ -81,10 +79,9 @@
               }
             }
           });
-
-
         });
       }
+
     </script>
     <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
     <div id="content"></div>
